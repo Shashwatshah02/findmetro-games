@@ -9,13 +9,23 @@ import { Repository } from 'typeorm';
 export class UserService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<{status: string, message: string, user: User}> {
     const user = this.userRepository.create(createUserDto);
-    return await this.userRepository.save(user);
+    const savedUser = await this.userRepository.save(user);
+    return {
+      status: 'success',
+      message: 'User added successfully',
+      user: savedUser
+    };
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  async findAll(): Promise<{status: string, message: string, user: User[]}> {
+    const user = await this.userRepository.find();
+    return {
+      status: 'success',
+      message: 'Users listed successfully',
+      user: user
+    }
   }
 
   findOne(id: number) {

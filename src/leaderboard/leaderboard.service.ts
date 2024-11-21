@@ -32,15 +32,30 @@ export class LeaderboardService {
       game,
       score,
     });
-    return await this.leaderboardRepository.save(leaderboardEntry);
+    const savedLeaderboard = await this.leaderboardRepository.save(leaderboardEntry);
+    return {
+      status: 'success',
+      message: 'Game created successfully',
+      game: savedLeaderboard
+    }
   }
 
-  findAll() {
-    return this.leaderboardRepository.find();
+  async findAll() {
+    const leaderboard = await this.leaderboardRepository.find();
+    return {
+      status: 'success',
+      message: 'Game created successfully',
+      game: leaderboard
+    }
   }
 
   async findGameLeaderboard(gameId: number) {
-    return await this.leaderboardRepository.find({ where: { game: {id: gameId} }, order: { score: 'DESC' }, relations: ['user', 'game'] });
+    const leaderboard = await this.leaderboardRepository.find({ where: { game: {id: gameId} }, order: { score: 'DESC' }, relations: ['user', 'game'] });
+    return {
+      status: 'success',
+      message: 'Game created successfully',
+      game: leaderboard
+    }
   }
 
   findOne(id: number) {

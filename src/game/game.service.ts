@@ -10,13 +10,23 @@ export class GameService {
   constructor(@InjectRepository(Game) private readonly gameRepository: Repository<Game>) {}
 
 
-  async create(createGameDto: CreateGameDto) {
+  async create(createGameDto: CreateGameDto): Promise<{status: string, message: string, game: Game}> {
     const game = this.gameRepository.create(createGameDto);
-    return await this.gameRepository.save(game);
+    const savedGame = await this.gameRepository.save(game);
+    return {
+      status: 'success',
+      message: 'Game created successfully',
+      game: savedGame
+    }
   }
 
-  findAll() {
-    return this.gameRepository.find();
+  async findAll() {
+    const game = await this.gameRepository.find();
+    return {
+      status: 'success',
+      message: 'Game created successfully',
+      game: game
+    }
   }
 
   findOne(id: number) {

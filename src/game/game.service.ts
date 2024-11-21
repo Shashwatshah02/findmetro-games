@@ -42,7 +42,7 @@ export class GameService {
     const deleteGame = await this.gameRepository.remove(game)
     return {
       status: 'success',
-      message: 'Game deleted successfully',
+      message: 'Game delete successfull',
       game: deleteGame
     }
   }

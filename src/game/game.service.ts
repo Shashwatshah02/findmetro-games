@@ -3,7 +3,7 @@ import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 
 @Injectable()
 export class GameService {
@@ -24,7 +24,7 @@ export class GameService {
     const game = await this.gameRepository.find();
     return {
       status: 'success',
-      message: 'Game created successfully',
+      message: 'Game listed successfully',
       game: game
     }
   }
@@ -37,7 +37,13 @@ export class GameService {
     return `This action updates a #${id} game`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} game`;
+  async remove(id: number) {
+    const game = await this.gameRepository.findOne({where : {id}})
+    const deleteGame = await this.gameRepository.remove(game)
+    return {
+      status: 'success',
+      message: 'Game deleted successfully',
+      game: deleteGame
+    }
   }
 }

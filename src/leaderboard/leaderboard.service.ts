@@ -35,7 +35,7 @@ export class LeaderboardService {
     const savedLeaderboard = await this.leaderboardRepository.save(leaderboardEntry);
     return {
       status: 'success',
-      message: 'Game created successfully',
+      message: 'LeaderBoard saved successfully',
       game: savedLeaderboard
     }
   }
@@ -44,7 +44,7 @@ export class LeaderboardService {
     const leaderboard = await this.leaderboardRepository.find();
     return {
       status: 'success',
-      message: 'Game created successfully',
+      message: 'LeaderBoard listed successfully',
       game: leaderboard
     }
   }
@@ -53,7 +53,7 @@ export class LeaderboardService {
     const leaderboard = await this.leaderboardRepository.find({ where: { game: {id: gameId} }, order: { score: 'DESC' }, relations: ['user', 'game'] });
     return {
       status: 'success',
-      message: 'Game created successfully',
+      message: 'LeaderBoard listed according to the game',
       game: leaderboard
     }
   }
